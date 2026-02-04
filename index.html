@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres ser mi San Valentín?</title>
+    <style>
+        /* Estilos Generales */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffeef2;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        #main-container, #success-screen {
+            width: 90%;
+            max-width: 400px;
+        }
+
+        h1 {
+            color: #d63384;
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            height: 60px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-weight: bold;
+        }
+
+        #btn-si {
+            background-color: #ff4d6d;
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+        }
+
+        #btn-no {
+            background-color: #adb5bd;
+            color: white;
+            position: absolute; /* Para que pueda moverse libremente */
+            transition: all 0.3s ease; /* Efecto de "correr" */
+        }
+
+        /* Pantalla de Éxito */
+        #success-screen {
+            display: none;
+        }
+
+        .heart {
+            background-color: #ff4d6d;
+            display: inline-block;
+            height: 100px;
+            margin: 0 10px;
+            position: relative;
+            top: 0;
+            transform: rotate(-45deg);
+            width: 100px;
+            animation: beat .8s infinite;
+        }
+
+        .heart:before, .heart:after {
+            content: "";
+            background-color: #ff4d6d;
+            border-radius: 50%;
+            height: 100px;
+            position: absolute;
+            width: 100px;
+        }
+
+        .heart:before { top: -50px; left: 0; }
+        .heart:after { left: 50px; top: 0; }
+
+        @keyframes beat {
+            0% { transform: scale(1) rotate(-45deg); }
+            50% { transform: scale(1.1) rotate(-45deg); }
+            100% { transform: scale(1) rotate(-45deg); }
+        }
+
+        h2 {
+            color: #d63384;
+            margin-top: 60px;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Pantalla Principal -->
+    <div id="main-container">
+        <h1>¿Quieres ser mi San Valentín? ❤️</h1>
+        <div class="buttons">
+            <button id="btn-si" onclick="aceptar()">Sí</button>
+            <button id="btn-no">No</button>
+        </div>
+    </div>
+
+    <!-- Pantalla de Sabía que dirías que sí -->
+    <div id="success-screen">
+        <div class="heart"></div>
+        <h2>¡Sabía que dirías que sí! Te amo ❤️</h2>
+    </div>
+
+    <script>
+        const btnNo = document.getElementById('btn-no');
+        const mainContainer = document.getElementById('main-container');
+        const successScreen = document.getElementById('success-screen');
+
+        // Función para mover el botón a una posición aleatoria
+        function moverBoton() {
+            // Calculamos límites para que no se salga de la pantalla
+            const x = Math.random() * (window.innerWidth - btnNo.offsetWidth - 20);
+            const y = Math.random() * (window.innerHeight - btnNo.offsetHeight - 20);
+            
+            btnNo.style.position = "fixed"; // Cambia a fixed para moverse por toda la pantalla
+            btnNo.style.left = x + "px";
+            btnNo.style.top = y + "px";
+        }
+
+        // En PC: Se mueve cuando el mouse se acerca
+        btnNo.addEventListener('mouseenter', moverBoton);
+
+        // En Celular: Se mueve cuando intentan darle click
+        btnNo.addEventListener('click', (e) => {
+            e.preventDefault();
+            moverBoton();
+        });
+
+        // Al darle al botón SÍ
+        function aceptar() {
+            mainContainer.style.display = 'none';
+            successScreen.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
